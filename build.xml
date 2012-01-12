@@ -1,0 +1,18 @@
+<project name="ranx" default="build" basedir=".">
+	<property name="antlr" location="antlr"/>
+	<property name="bld" location="bld"/>
+	<property name="parser_dir" location="bld/parser"/> 
+	<target name="build" depends="generate_parser">
+	</target>
+	<target name="init">
+		<mkdir dir="${bld}"/>
+		<mkdir dir="${parser_dir}"/>
+	</target>
+	<target name="generate_parser" depends="init">
+		<exec executable="antlr3">
+			<arg value="-o"/>
+			<arg value="${parser_dir}"/>
+			<arg value="${antlr}/ranx.g"/>
+		</exec>
+	</target>
+</project>
