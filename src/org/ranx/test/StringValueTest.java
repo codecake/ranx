@@ -22,6 +22,15 @@ import org.junit.*;
 
 public class StringValueTest extends Assert {
 
+	private String[] validIntStrings = {
+		"123",
+		"  22",
+		"33  ",
+		"   456   ",
+		"-123",
+		"   -456"
+	};
+
 	@Test public void ctor1() {
 		StringValue v = new StringValue();
 		assertEquals("", v.get());
@@ -35,5 +44,11 @@ public class StringValueTest extends Assert {
 	@Test public void type() {
 		StringValue v = new StringValue("bar");
 		assertEquals(ValueType.TString, v.type());
+	}
+	
+	@Test public void canCastToInt() {
+		for(String s : validIntStrings) {
+			assertTrue(new StringValue(s).canCastToInt());
+		}
 	}
 }
