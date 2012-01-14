@@ -20,12 +20,12 @@ package org.ranx;
 
 public class StringValue extends Value {
 	private String _value = "undef";
-	public StringValue() {}
-	public StringValue(String value_) {}
+	public StringValue() { _value = ""; }
+	public StringValue(String value_) { _value = value_; }
 	
 	public String get() { return _value; }
 
-	@Override public ValueType type() { return ValueType.TInt; }
+	@Override public ValueType type() { return ValueType.TString; }
 	@Override public Value add(Value that) throws InvalidOperation { return null; }
 	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
 	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
