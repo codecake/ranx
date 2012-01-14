@@ -49,6 +49,7 @@
 			srcdir="${java_src_dir}" 
 			destdir="${java_out_dir}" 
 			includeAntRuntime="false"
+			debug="on"
 			classpath="${lib_dir}/junit-4.10.jar"
 		/>
 	</target>
