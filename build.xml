@@ -19,13 +19,17 @@
 	<property name="parser_src" location="antlr"/>
 	<property name="bld_dir" location="bld"/>
 	<property name="parser_dir" location="bld/parser"/> 
+	<property name="java_src_dir" location="src"/>
+	<property name="java_out_dir" location="bld/classes"/>
+	<property name="lib_dir" location="lib"/>
 	
-	<target name="build" depends="generate_parser">
+	<target name="build" depends="generate_parser, compile">
 	</target>
 	
 	<target name="init">
 		<mkdir dir="${bld_dir}"/>
 		<mkdir dir="${parser_dir}"/>
+		<mkdir dir="${java_out_dir}"/>
 	</target>
 	
 	<target name="generate_parser" depends="init">
@@ -38,6 +42,31 @@
 	
 	<target name="clean">
 		<delete dir="${bld_dir}" />
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac 
+			srcdir="${java_src_dir}" 
+			destdir="${java_out_dir}" 
+			includeAntRuntime="false"
+			classpath="${lib_dir}/junit-4.10.jar"
+		/>
+	</target>
+	
+	<target name="test">
+		<junit showoutput="true">
+			<classpath>
+				<pathelement location="${java_out_dir}"/>
+				<pathelement location="${lib_dir}/junit-4.10.jar"/>
+			</classpath>
+			<batchtest>
+ 				<formatter type="plain" usefile="false"/>
+ 				<fileset dir="${java_out_dir}">
+					<include name="**/*Test.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		
 	</target>
 
 </project>
