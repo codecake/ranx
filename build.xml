@@ -54,7 +54,7 @@
 	</target>
 	
 	<target name="test">
-		<junit showoutput="true">
+		<junit showoutput="true" haltonerror="true" haltonfailure="true">
 			<classpath>
 				<pathelement location="${java_out_dir}"/>
 				<pathelement location="${lib_dir}/junit-4.10.jar"/>
