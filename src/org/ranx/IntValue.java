@@ -63,6 +63,7 @@ public class IntValue extends NumericValue {
 			case TInt : return this; 
 			case TFloat : return new FloatValue(_value);
 			case TString : return new StringValue(new Integer(_value).toString());
+			case TBool : return new BoolValue(_value != 0);
 		}
 		throw new InvalidCast();
 	}

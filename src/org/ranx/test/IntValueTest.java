@@ -111,4 +111,14 @@ public class IntValueTest extends Assert {
 		StringValue result = (StringValue) r;
 		assertEquals("456", result.get());
 	}
+	
+	@Test public void castToBool() throws InvalidCast {
+		IntValue v = new IntValue(456);
+		Value r = v.castTo(ValueType.TBool);
+		assertNotNull(r);
+		assertEquals(ValueType.TBool, r.type());
+		BoolValue result = (BoolValue) r;
+		assertEquals(true, result.get());
+	}
+	
 }
