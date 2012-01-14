@@ -102,4 +102,13 @@ public class IntValueTest extends Assert {
 		FloatValue result = (FloatValue) r;
 		assertEquals(456.0, result.get(), 0.00001);
 	}
+
+	@Test public void castToString() throws InvalidCast {
+		IntValue v = new IntValue(456);
+		Value r = v.castTo(ValueType.TString);
+		assertNotNull(r);
+		assertEquals(ValueType.TString, r.type());
+		StringValue result = (StringValue) r;
+		assertEquals("456", result.get());
+	}
 }
