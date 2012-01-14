@@ -47,6 +47,26 @@ public class IntValueTest extends Assert {
 		assertEquals(579, result.get());
 	}
 
+	@Test public void addFloat() throws InvalidOperation {
+		IntValue lhs = new IntValue(123);
+		FloatValue rhs = new FloatValue(45.67);
+		Value v = lhs.add(rhs);
+		assertNotNull(v);
+		assertEquals(ValueType.TFloat, v.type());
+		FloatValue result = (FloatValue) v;
+		assertEquals(168.67, result.get(), 0.00001);
+	}
+	
+	@Test public void addString() throws InvalidOperation {
+		IntValue lhs = new IntValue(123);
+		StringValue rhs = new StringValue("45.67");
+		Value v = lhs.add(rhs);
+		assertNotNull(v);
+		assertEquals(ValueType.TFloat, v.type());
+		FloatValue result = (FloatValue) v;
+		assertEquals(168.67, result.get(), 0.00001);
+	}
+
 	@Test public void subtract() throws InvalidOperation {
 		IntValue lhs = new IntValue(456);
 		IntValue rhs = new IntValue(123);

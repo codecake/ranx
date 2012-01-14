@@ -30,7 +30,13 @@ public class FloatValue extends NumericValue {
 
 	@Override public ValueType type() { return ValueType.TFloat; }
 	
-	@Override public Value add(Value that) throws InvalidOperation { return null; }
+	@Override public Value add(Value that) throws InvalidOperation { 
+		if(that.canCastTo(ValueType.TFloat)) {
+			throw new InvalidOperation("don't know how to add this");
+		}			
+		return new FloatValue(_value + ((FloatValue)that).get());
+	}
+
 	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
 	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
 	@Override public Value divide(Value that) throws InvalidOperation { return null; }

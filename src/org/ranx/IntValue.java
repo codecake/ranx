@@ -30,10 +30,22 @@ public class IntValue extends NumericValue {
 	@Override public ValueType type() { return ValueType.TInt; }
 
 	@Override public Value add(Value that) throws InvalidOperation { 
-		if(that.type() != ValueType.TInt) {
-			throw new InvalidOperation("don't know how to add this");
-		}			
-		return new IntValue(_value + ((IntValue)that).get());
+		try {
+			switch(that.type()) {
+				case TInt : return new IntValue(_value + ((IntValue)that).get());
+				case TFloat : return new FloatValue(((FloatValue)castTo(ValueType.TFloat)).get() + ((FloatValue)that).get());
+				case TString : {
+					if(that.canCastTo(ValueType.TInt)) {
+						return add(that.castTo(ValueType.TInt));
+					} else if(that.canCastTo(ValueType.TFloat)) {
+						return add(that.castTo(ValueType.TFloat));
+					}
+				}
+			}
+		} catch (InvalidCast e) {
+			throw new InvalidOperation(e);
+		}
+		throw new InvalidOperation("don't know how to add this");
 	}
 
 	@Override public Value subtract(Value that) throws InvalidOperation {
