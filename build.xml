@@ -23,7 +23,7 @@
 	<property name="java_out_dir" location="bld/classes"/>
 	<property name="lib_dir" location="lib"/>
 	
-	<target name="build" depends="generate_parser, compile">
+	<target name="build" depends="compile">
 	</target>
 	
 	<target name="init">
@@ -54,14 +54,16 @@
 		/>
 	</target>
 	
-	<target name="test">
-		<junit showoutput="true" haltonerror="true" haltonfailure="true">
+	<target name="test" depends="compile">
+		<junit 
+			haltonerror="true" 
+			haltonfailure="true">
 			<classpath>
 				<pathelement location="${java_out_dir}"/>
 				<pathelement location="${lib_dir}/junit-4.10.jar"/>
 			</classpath>
 			<batchtest>
- 				<formatter type="plain" usefile="false"/>
+ 				<formatter type="brief" usefile="false"/>
  				<fileset dir="${java_out_dir}">
 					<include name="**/*Test.class"/>
 				</fileset>
