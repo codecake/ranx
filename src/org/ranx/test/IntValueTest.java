@@ -37,6 +37,7 @@ public class IntValueTest extends Assert {
 		assertEquals(ValueType.TInt, v.type());
 	}
 	
+	// can add two integers
 	@Test public void add() throws InvalidOperation {
 		IntValue lhs = new IntValue(123);
 		IntValue rhs = new IntValue(456);
@@ -47,6 +48,7 @@ public class IntValueTest extends Assert {
 		assertEquals(579, result.get());
 	}
 
+	// can add integer and float
 	@Test public void addFloat() throws InvalidOperation {
 		IntValue lhs = new IntValue(123);
 		FloatValue rhs = new FloatValue(45.67);
@@ -57,6 +59,7 @@ public class IntValueTest extends Assert {
 		assertEquals(168.67, result.get(), 0.00001);
 	}
 	
+	// can add integer and string that can be cast to float
 	@Test public void addString() throws InvalidOperation {
 		IntValue lhs = new IntValue(123);
 		StringValue rhs = new StringValue("45.67");
@@ -65,6 +68,16 @@ public class IntValueTest extends Assert {
 		assertEquals(ValueType.TFloat, v.type());
 		FloatValue result = (FloatValue) v;
 		assertEquals(168.67, result.get(), 0.00001);
+	}
+	
+	// can add integer and string that cannot be cast to float, fall back on string concat
+	@Test public void addString2() throws InvalidOperation, InvalidCast {
+		IntValue lhs = new IntValue(123);
+		StringValue rhs = new StringValue("abc");
+		Value v = lhs.add(rhs);
+		assertNotNull(v);
+		assertEquals(ValueType.TString, v.type());
+		assertEquals("123abc", v.toStr().get());
 	}
 
 	@Test public void subtract() throws InvalidOperation {

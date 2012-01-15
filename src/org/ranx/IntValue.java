@@ -35,10 +35,12 @@ public class IntValue extends NumericValue {
 				case TInt : return new IntValue(_value + ((IntValue)that).get());
 				case TFloat : return new FloatValue(((FloatValue)castTo(ValueType.TFloat)).get() + ((FloatValue)that).get());
 				case TString : {
-					if(that.canCastTo(ValueType.TInt)) {
-						return add(that.castTo(ValueType.TInt));
-					} else if(that.canCastTo(ValueType.TFloat)) {
-						return add(that.castTo(ValueType.TFloat));
+					if(that.canCastToInt()) {
+						return add(that.toInt());
+					} else if(that.canCastToFloat()) {
+						return add(that.toFloat());
+					} else {
+						return toStr().add(that);
 					}
 				}
 			}

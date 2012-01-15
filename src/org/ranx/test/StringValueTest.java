@@ -94,7 +94,7 @@ public class StringValueTest extends Assert {
 	
 	@Test public void castToInt() throws InvalidCast {
 		for(String s : validIntStrings) {
-			Value v = new StringValue(s).castToInt();
+			Value v = new StringValue(s).toInt();
 			assertEquals(ValueType.TInt, v.type());
 			IntValue i = (IntValue) v;
 			assertEquals(Integer.parseInt(s.trim()), i.get());
@@ -102,7 +102,7 @@ public class StringValueTest extends Assert {
 		
 		for(String s : invalidIntStrings) {
 			try {
-				Value v = new StringValue(s).castToInt();
+				Value v = new StringValue(s).toInt();
 				fail("Exception expected");
 			} catch(InvalidCast e) {
 				// expected
@@ -124,7 +124,7 @@ public class StringValueTest extends Assert {
 	
 	@Test public void castToFloat() throws InvalidCast {
 		for(String s : validFloatStrings) {
-			FloatValue v = new StringValue(s).castToFloat();
+			FloatValue v = new StringValue(s).toFloat();
 			assertEquals(ValueType.TFloat, v.type());
 			assertEquals(Double.parseDouble(s.trim()), v.get(), 0.00001);
 		}
@@ -133,7 +133,7 @@ public class StringValueTest extends Assert {
 	@Test public void castCastToFloatFail() {
 		for(String s : invalidFloatStrings) {
 			try {
-				FloatValue v = new StringValue(s).castToFloat();
+				FloatValue v = new StringValue(s).toFloat();
 				fail("Exception expected");
 			} catch(InvalidCast e) {
 				// expected

@@ -28,7 +28,37 @@ public class StringValue extends Value {
 	public String get() { return _value; }
 
 	@Override public ValueType type() { return ValueType.TString; }
-	@Override public Value add(Value that) throws InvalidOperation { return null; }
+	
+	@Override public Value add(Value that) throws InvalidOperation {
+		try {
+			switch(that.type()) {
+				case TInt : {
+					if(canCastToInt()) {
+						return toInt().add(that);
+					} else if(canCastToFloat()) {
+						return toFloat().add(that);
+					} else {
+						return new StringValue(_value.concat(that.toStr().get()));
+					}
+				}
+			
+				case TFloat : {
+					if(canCastToInt() && that.canCastToInt()) {
+						return toInt().add(that);
+					} else if(canCastToFloat()) {
+						return toFloat().add(that);
+					} else {
+						return new StringValue(_value.concat(that.toStr().get()));
+					}
+				}
+				case TString : return new StringValue(_value.concat(that.toStr().get()));
+			}
+		} catch (InvalidCast e) {
+			throw new InvalidOperation(e);
+		}
+		throw new InvalidOperation("don't know how to add that");
+	}
+	
 	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
 	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
 	@Override public Value divide(Value that) throws InvalidOperation { return null; }
@@ -46,6 +76,7 @@ public class StringValue extends Value {
 			switch(target) {
 				case TInt : return new IntValue(Integer.parseInt(_value.trim()));
 				case TFloat : return new FloatValue(Double.parseDouble(_value.trim()));
+				case TString : return this;
 			}
 		} catch(RuntimeException e) {
 			throw new InvalidCast(e);
