@@ -30,4 +30,8 @@ public abstract class Value {
 	public boolean canCastToInt() { return canCastTo(ValueType.TInt); }
 	public boolean canCastToFloat() { return canCastTo(ValueType.TFloat); }
 	public boolean canCastToBool() { return canCastTo(ValueType.TBool); }
+	
+	public IntValue castToInt() throws InvalidCast { return (IntValue) castTo(ValueType.TInt); }
+	public FloatValue castToFloat() throws InvalidCast { return (FloatValue) castTo(ValueType.TFloat); }
+	public BoolValue castToBool() throws InvalidCast { return (BoolValue) castTo(ValueType.TBool); }
 }

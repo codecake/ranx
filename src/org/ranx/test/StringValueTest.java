@@ -30,6 +30,42 @@ public class StringValueTest extends Assert {
 		"-123",
 		"   -456"
 	};
+	
+	private String[] invalidIntStrings = {
+		"abc",
+		"123a",
+		"V123",
+		"aa22bb",
+		"11 22"
+	};
+	
+	private String[] validFloatStrings = {
+		"123",
+		"  22",
+		"33  ",
+		"   456   ",
+		"-123",
+		"   -456",
+		"123.45",
+		"-456.78",
+		"0.0",
+		"0", 
+		"1",
+		"-1",
+		"123.45e22",
+		"123.67E-10",
+		"-123.45e15"
+	};
+
+	private String[] invalidFloatStrings = {
+		"abc",
+		"123a",
+		"V123",
+		"aa22bb",
+		"11 22",
+		"123.45x55",
+		"asb123.45"
+	};
 
 	@Test public void ctor1() {
 		StringValue v = new StringValue();
@@ -49,6 +85,59 @@ public class StringValueTest extends Assert {
 	@Test public void canCastToInt() {
 		for(String s : validIntStrings) {
 			assertTrue(new StringValue(s).canCastToInt());
+		}
+		
+		for(String s : invalidIntStrings) {
+			assertFalse(new StringValue(s).canCastToInt());
+		}
+	}
+	
+	@Test public void castToInt() throws InvalidCast {
+		for(String s : validIntStrings) {
+			Value v = new StringValue(s).castToInt();
+			assertEquals(ValueType.TInt, v.type());
+			IntValue i = (IntValue) v;
+			assertEquals(Integer.parseInt(s.trim()), i.get());
+		}
+		
+		for(String s : invalidIntStrings) {
+			try {
+				Value v = new StringValue(s).castToInt();
+				fail("Exception expected");
+			} catch(InvalidCast e) {
+				// expected
+			}
+		}
+	}
+	
+	@Test public void canCastToFloat() {
+		for(String s : validFloatStrings) {
+			assertTrue(new StringValue(s).canCastToFloat());
+		}
+	}
+	
+	@Test public void cannotCastToFloat() {
+		for(String s : invalidFloatStrings) {
+			assertFalse(new StringValue(s).canCastToFloat());
+		}
+	}
+	
+	@Test public void castToFloat() throws InvalidCast {
+		for(String s : validFloatStrings) {
+			FloatValue v = new StringValue(s).castToFloat();
+			assertEquals(ValueType.TFloat, v.type());
+			assertEquals(Double.parseDouble(s.trim()), v.get(), 0.00001);
+		}
+	}
+	
+	@Test public void castCastToFloatFail() {
+		for(String s : invalidFloatStrings) {
+			try {
+				FloatValue v = new StringValue(s).castToFloat();
+				fail("Exception expected");
+			} catch(InvalidCast e) {
+				// expected
+			}
 		}
 	}
 }
