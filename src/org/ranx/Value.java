@@ -20,12 +20,14 @@ package org.ranx;
 
 public abstract class Value {
 	public abstract ValueType type();
-	public abstract Value add(Value that) throws InvalidOperation;
-	public abstract Value subtract(Value that) throws InvalidOperation;
-	public abstract Value multiply(Value that) throws InvalidOperation;
-	public abstract Value divide(Value that) throws InvalidOperation;
 	public abstract boolean canCastTo(ValueType target);
 	public abstract Value castTo(ValueType target) throws InvalidCast;
+	
+	public boolean isInt() { return type() == ValueType.TInt; }
+	public boolean isFloat() { return type() == ValueType.TFloat; }
+	public boolean isBool() { return type() == ValueType.TBool; }
+	public boolean isString() { return type() == ValueType.TString; }
+	public boolean isNumeric() { return isInt() || isFloat(); }
 	
 	public boolean canCastToInt() { return canCastTo(ValueType.TInt); }
 	public boolean canCastToFloat() { return canCastTo(ValueType.TFloat); }

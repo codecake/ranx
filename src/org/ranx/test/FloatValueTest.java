@@ -36,14 +36,4 @@ public class FloatValueTest extends Assert {
 		FloatValue v = new FloatValue(456.78);
 		assertEquals(ValueType.TFloat, v.type());
 	}
-
-	@Test public void add() throws InvalidOperation {
-		FloatValue lhs = new FloatValue(123.11);
-		FloatValue rhs = new FloatValue(456.22);
-		Value v = lhs.add(rhs);
-		assertNotNull(v);
-		assertEquals(ValueType.TFloat, v.type());
-		FloatValue result = (FloatValue) v;
-		assertEquals(579.33, result.get(), 0.00001);
-	}
 }

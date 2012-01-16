@@ -18,6 +18,7 @@
 
 package org.ranx;
 
+
 public class FloatValue extends NumericValue {
 
 	private double _value = -6.66;
@@ -30,16 +31,23 @@ public class FloatValue extends NumericValue {
 
 	@Override public ValueType type() { return ValueType.TFloat; }
 	
-	@Override public Value add(Value that) throws InvalidOperation { 
-		if(that.canCastTo(ValueType.TFloat)) {
-			throw new InvalidOperation("don't know how to add this");
-		}			
-		return new FloatValue(_value + ((FloatValue)that).get());
+	@Override public boolean canCastTo(ValueType target) { 
+		switch(target) {
+			case TInt : return false;
+			case TFloat : return true;
+			case TBool : return true;
+			case TString : return true;
+		}
+		return false;
 	}
-
-	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
-	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
-	@Override public Value divide(Value that) throws InvalidOperation { return null; }
-	@Override public boolean canCastTo(ValueType target) { return false; }
-	@Override public Value castTo(ValueType target) throws InvalidCast { return null; }
+	
+	@Override public Value castTo(ValueType target) throws InvalidCast { 
+		switch(target) {
+			case TInt : throw new InvalidCast("can't cast float to int");
+			case TFloat : return this;
+			case TBool : return new BoolValue(Math.abs(_value - 0.0) < 0.00001); // TODO: is this correct?
+			case TString : return new StringValue(new Double(_value).toString());
+		}
+		throw new InvalidCast("don't know this type");
+	}
 }

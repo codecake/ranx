@@ -29,40 +29,6 @@ public class StringValue extends Value {
 
 	@Override public ValueType type() { return ValueType.TString; }
 	
-	@Override public Value add(Value that) throws InvalidOperation {
-		try {
-			switch(that.type()) {
-				case TInt : {
-					if(canCastToInt()) {
-						return toInt().add(that);
-					} else if(canCastToFloat()) {
-						return toFloat().add(that);
-					} else {
-						return new StringValue(_value.concat(that.toStr().get()));
-					}
-				}
-			
-				case TFloat : {
-					if(canCastToInt() && that.canCastToInt()) {
-						return toInt().add(that);
-					} else if(canCastToFloat()) {
-						return toFloat().add(that);
-					} else {
-						return new StringValue(_value.concat(that.toStr().get()));
-					}
-				}
-				case TString : return new StringValue(_value.concat(that.toStr().get()));
-			}
-		} catch (InvalidCast e) {
-			throw new InvalidOperation(e);
-		}
-		throw new InvalidOperation("don't know how to add that");
-	}
-	
-	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
-	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
-	@Override public Value divide(Value that) throws InvalidOperation { return null; }
-	
 	@Override public boolean canCastTo(ValueType target) { 
 		switch(target) {
 			case TInt: return intRegex.matcher(_value).find();

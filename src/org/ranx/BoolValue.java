@@ -26,10 +26,6 @@ public class BoolValue extends Value {
 	public boolean get() { return _value; }
 
 	@Override public ValueType type() { return ValueType.TBool; }
-	@Override public Value add(Value that) throws InvalidOperation { return null; }
-	@Override public Value subtract(Value that) throws InvalidOperation { return null; }
-	@Override public Value multiply(Value that) throws InvalidOperation { return null; }
-	@Override public Value divide(Value that) throws InvalidOperation { return null; }
 	@Override public boolean canCastTo(ValueType target) { return false; }
 	@Override public Value castTo(ValueType target) throws InvalidCast { return null; }
 }

@@ -28,48 +28,6 @@ public class IntValue extends NumericValue {
 	public int get() { return _value; }
 	
 	@Override public ValueType type() { return ValueType.TInt; }
-
-	@Override public Value add(Value that) throws InvalidOperation { 
-		try {
-			switch(that.type()) {
-				case TInt : return new IntValue(_value + ((IntValue)that).get());
-				case TFloat : return new FloatValue(((FloatValue)castTo(ValueType.TFloat)).get() + ((FloatValue)that).get());
-				case TString : {
-					if(that.canCastToInt()) {
-						return add(that.toInt());
-					} else if(that.canCastToFloat()) {
-						return add(that.toFloat());
-					} else {
-						return toStr().add(that);
-					}
-				}
-			}
-		} catch (InvalidCast e) {
-			throw new InvalidOperation(e);
-		}
-		throw new InvalidOperation("don't know how to add this");
-	}
-
-	@Override public Value subtract(Value that) throws InvalidOperation {
-		if(that.type() != ValueType.TInt) {
-			throw new InvalidOperation("don't know how to subtract this");
-		}			
-		return new IntValue(_value - ((IntValue)that).get());
-	}
-	
-	@Override public Value multiply(Value that) throws InvalidOperation {
-		if(that.type() != ValueType.TInt) {
-			throw new InvalidOperation("don't know how to subtract this");
-		}			
-		return new IntValue(_value * ((IntValue)that).get());
-	}	
-	
-	@Override public Value divide(Value that) throws InvalidOperation {
-		if(that.type() != ValueType.TInt) {
-			throw new InvalidOperation("don't know how to subtract this");
-		}			
-		return new IntValue(_value / ((IntValue)that).get());
-	}
 	
 	@Override public boolean canCastTo(ValueType target) { return true; }
 	@Override public Value castTo(ValueType target) throws InvalidCast { 
