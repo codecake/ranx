@@ -18,6 +18,8 @@
 package org.ranx;
 
 public class InvalidOperation extends Exception {
+	private static final long serialVersionUID = 1L;
+
 	public InvalidOperation() {}
 	public InvalidOperation(String message) { super(message); }
 	public InvalidOperation(String message, Throwable cause) { super(message, cause); }

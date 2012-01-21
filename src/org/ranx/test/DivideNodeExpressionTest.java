@@ -14,19 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 package org.ranx.test;
 
 import org.ranx.*;
 import org.junit.*;
 
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+public class DivideNodeExpressionTest extends Assert {
+	@Test public void evalInvalidate() throws InvalidCast, InvalidOperation {
+		ValueNode in1 = new ValueNode(new FloatValue(123));
+		ValueNode in2 = new ValueNode(new FloatValue(456));
+		Node result = new Node();
+		result.expression(new DivideNodeExpression(result, in1, in2));
+		assertFalse(result.valid());
+		assertEquals(0.269736842, result.value().asDouble(), 0.00001);
+		assertTrue(result.valid());
+		in1.invalidate();
+		assertFalse(result.valid());
+		in1.set(222);
+		assertEquals(0.486842105, result.value().asDouble(), 0.00001);
+		assertTrue(result.valid());
 	}
 }

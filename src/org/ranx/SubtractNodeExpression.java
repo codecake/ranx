@@ -14,19 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+package org.ranx;
 
-package org.ranx.test;
+public class SubtractNodeExpression extends NodeExpression {
 
-import org.ranx.*;
-import org.junit.*;
+	private Node _lhs;
+	private Node _rhs;
+	
+	public SubtractNodeExpression(Node node_, Node lhs_, Node rhs_) {
+		super(node_);
+		_lhs = lhs_;
+		_rhs = rhs_;
+		_lhs.connectTo(node_);
+		_rhs.connectTo(node_);
+	}
 
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+	@Override
+	public Value eval() throws InvalidOperation {
+		return ValueOps.subtract(_lhs.value(), _rhs.value());
 	}
 }
