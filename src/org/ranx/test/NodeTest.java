@@ -52,4 +52,36 @@ public class NodeTest extends Assert {
 		assertEquals(123, n.value().toInt().get());
 		assertTrue(n.valid());
 	}
+	
+	@Test public void connectTo() {
+		Node n1 = new Node();
+		Node n2 = new Node();
+		n1.connectTo(n2);
+		assertTrue(n1.isConnectedTo(n2));
+		assertTrue(n2.isConnectedFrom(n1));
+		assertFalse(n1.isConnectedFrom(n2));
+		assertFalse(n2.isConnectedTo(n1));
+		n1.disconnect(n2);
+		assertFalse(n1.isConnectedTo(n2));
+		assertFalse(n2.isConnectedFrom(n1));
+		assertFalse(n1.isConnectedFrom(n2));
+		assertFalse(n2.isConnectedTo(n1));
+		assertEquals(0, n1.ins().length);
+		assertEquals(0, n1.outs().length);
+		assertEquals(0, n2.ins().length);
+		assertEquals(0, n2.outs().length);
+	}
+	
+	@Test public void invalidate() throws InvalidOperation, InvalidCast {
+		Node n1 = new Node(new ValueExpression(new IntValue(123)));
+		Node n2 = new Node(new NodeExpression(n1));
+		n1.addOut(n2);
+		n2.addIn(n1);
+		assertFalse(n2.valid());
+		assertEquals(123, n2.value().toInt().get());
+		assertTrue(n2.valid());
+		n1.invalidate();
+		assertFalse(n1.valid());
+		assertFalse(n2.valid());
+	}
 }

@@ -22,7 +22,7 @@ import java.util.HashSet;
 
 public class Node {
 	private Value _value;
-	private Expression _expr;
+	private Expression _expr = null;
 	private boolean _valid = false;
 	
 	public Node() {}
@@ -41,8 +41,20 @@ public class Node {
 	
 	public void addIn(Node in) { _ins.add(in); }
 	public void addOut(Node out) { _outs.add(out); }
+	public void connectTo(Node that) { this.addOut(that); that.addIn(this); }
 	public void removeIn(Node in) { _ins.remove(in); }
 	public void removeOut(Node out) { _outs.remove(out); }
+	public void disconnect(Node that) {
+		if(_ins.remove(that)) {
+			that.removeOut(this);
+		} else if(_outs.remove(that)) {
+			that.removeIn(this);
+		}
+	}
+	
+	public boolean isConnectedTo(Node that) { return _outs.contains(that); }
+	public boolean isConnectedFrom(Node that) { return _ins.contains(that); }
+	
 	
 	public Value value() throws InvalidOperation { 
 		if(_valid) {
@@ -51,5 +63,12 @@ public class Node {
 		_value = _expr.eval();
 		_valid = true;
 		return _value;
+	}
+	
+	public void invalidate() {
+		_valid = false;
+		for(Node n : _outs) {
+			n.invalidate();
+		}
 	}
 }
