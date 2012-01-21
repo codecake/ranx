@@ -17,19 +17,22 @@
 
 package org.ranx;
 
-import java.util.HashSet;
-
-public abstract class NodeExpression extends Expression {
-
-	private HashSet<Node> _ins = new HashSet<Node>();
-	private Node _node;
+public class AddNodeExpression extends NodeExpression {
 	
-	public NodeExpression(Node node_) {
-		_node = node_;
+	private Node _lhs;
+	private Node _rhs;
+	
+	public AddNodeExpression(Node node_, Node lhs_, Node rhs_) {
+		super(node_);
+		_lhs = lhs_;
+		_rhs = rhs_;
+		_lhs.connectTo(node_);
+		_rhs.connectTo(node_);
 	}
-	
-	public Node node() { return _node; }
 
-	public void addIn(Node in) { _ins.add(in); }
-	public void dropIns() { _ins.clear(); }
+	@Override
+	public Value eval() throws InvalidOperation {
+		return ValueOps.add(_lhs.value(), _rhs.value());
+	}
+
 }

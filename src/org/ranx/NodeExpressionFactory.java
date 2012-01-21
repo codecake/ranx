@@ -14,22 +14,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 package org.ranx;
 
-import java.util.HashSet;
-
-public abstract class NodeExpression extends Expression {
-
-	private HashSet<Node> _ins = new HashSet<Node>();
-	private Node _node;
-	
-	public NodeExpression(Node node_) {
-		_node = node_;
+public class NodeExpressionFactory {
+	public static Node add(Node lhs_, Node rhs_) {
+		Node n = new Node();
+		n.expression(new AddNodeExpression(n, lhs_, rhs_));
+		return n;
 	}
-	
-	public Node node() { return _node; }
-
-	public void addIn(Node in) { _ins.add(in); }
-	public void dropIns() { _ins.clear(); }
 }

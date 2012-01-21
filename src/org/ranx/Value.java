@@ -37,4 +37,9 @@ public abstract class Value {
 	public FloatValue toFloat() throws InvalidCast { return (FloatValue) castTo(ValueType.TFloat); }
 	public BoolValue toBool() throws InvalidCast { return (BoolValue) castTo(ValueType.TBool); }
 	public StringValue toStr() throws InvalidCast { return (StringValue) castTo(ValueType.TString); }
+	
+	public int asInt() throws InvalidCast { return toInt().get(); }
+	public double asDouble() throws InvalidCast { return toFloat().get(); }
+	public boolean asBool() throws InvalidCast { return toBool().get(); }
+	public String asString() throws InvalidCast { return toStr().get(); }
 }

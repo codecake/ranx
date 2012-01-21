@@ -74,7 +74,8 @@ public class NodeTest extends Assert {
 	
 	@Test public void invalidate() throws InvalidOperation, InvalidCast {
 		Node n1 = new Node(new ValueExpression(new IntValue(123)));
-		Node n2 = new Node(new NodeExpression(n1));
+		Node n2 = new Node();
+		n2.expression(new ConstNodeExpression(n2, n1));
 		n1.addOut(n2);
 		n2.addIn(n1);
 		assertFalse(n2.valid());
@@ -83,5 +84,18 @@ public class NodeTest extends Assert {
 		n1.invalidate();
 		assertFalse(n1.valid());
 		assertFalse(n2.valid());
+	}
+	
+	@Test public void nodeWithAddExpression() throws InvalidCast, InvalidOperation {
+		ValueNode in1 = NodeFactory.create(123);
+		ValueNode in2 = NodeFactory.create(456);
+		Node sum = NodeExpressionFactory.add(in1, in2);
+		assertFalse(sum.valid());
+		assertEquals(579, sum.value().asInt());
+		assertTrue(sum.valid());
+		in1.set(111);
+		assertFalse(sum.valid());
+		assertEquals(567, sum.value().asInt());
+		assertTrue(sum.valid());
 	}
 }

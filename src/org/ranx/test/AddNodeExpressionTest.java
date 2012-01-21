@@ -14,22 +14,24 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+package org.ranx.test;
 
-package org.ranx;
+import org.ranx.*;
+import org.junit.*;
 
-import java.util.HashSet;
-
-public abstract class NodeExpression extends Expression {
-
-	private HashSet<Node> _ins = new HashSet<Node>();
-	private Node _node;
-	
-	public NodeExpression(Node node_) {
-		_node = node_;
+public class AddNodeExpressionTest extends Assert {
+	@Test public void evalInvalidate() throws InvalidCast, InvalidOperation {
+		ValueNode in1 = new ValueNode(new IntValue(123));
+		ValueNode in2 = new ValueNode(new IntValue(456));
+		Node sum = new Node();
+		sum.expression(new AddNodeExpression(sum, in1, in2));
+		assertFalse(sum.valid());
+		assertEquals(579, sum.value().asInt());
+		assertTrue(sum.valid());
+		in1.invalidate();
+		assertFalse(sum.valid());
+		in1.set(222);
+		assertEquals(678, sum.value().asInt());
+		assertTrue(sum.valid());
 	}
-	
-	public Node node() { return _node; }
-
-	public void addIn(Node in) { _ins.add(in); }
-	public void dropIns() { _ins.clear(); }
 }

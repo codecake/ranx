@@ -17,19 +17,17 @@
 
 package org.ranx;
 
-import java.util.HashSet;
-
-public abstract class NodeExpression extends Expression {
-
-	private HashSet<Node> _ins = new HashSet<Node>();
-	private Node _node;
-	
-	public NodeExpression(Node node_) {
-		_node = node_;
+public class ValueNode extends Node {
+	public ValueNode(Value value_) {
+		super(new ValueExpression(value_));
 	}
 	
-	public Node node() { return _node; }
-
-	public void addIn(Node in) { _ins.add(in); }
-	public void dropIns() { _ins.clear(); }
+	public void set(Value value_) {
+		expression(new ValueExpression(value_));
+	}
+	
+	public void set(int value_) { set(new IntValue(value_)); }
+	public void set(double value_) { set(new FloatValue(value_)); }
+	public void set(String value_) { set(new StringValue(value_)); }
+	public void set(boolean value_) { set(new BoolValue(value_)); }
 }
