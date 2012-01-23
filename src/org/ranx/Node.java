@@ -61,12 +61,6 @@ public class Node {
 	 * @return valid flag
 	 */
 	public boolean valid() { return _valid; }
-	public void invalidate() {
-		_valid = false;
-		for(Node n : outs()) {
-			n.invalidate();
-		}
-	}
 
 	/**
 	 * Returns the set of node inputs
