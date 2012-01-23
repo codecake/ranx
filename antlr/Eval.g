@@ -15,10 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-tree grammar eval;
+tree grammar Eval;
 
 options {
-	tokenVocab = ranx;
+	tokenVocab = Ranx;
 	ASTLabelType = CommonTree;
 }
 

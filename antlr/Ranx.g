@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-grammar ranx;
+grammar Ranx;
 
 options {
 	output=AST;
@@ -31,6 +31,14 @@ tokens {
 	FLOAT_TYPE;
 	STRING_TYPE;
 	BOOL_TYPE;
+}
+
+@header {
+package org.ranx.parser;
+}
+
+@lexer::header {
+package org.ranx.parser;
 }
 
 formula :	(def | print | deps | sysCmd ) *;
