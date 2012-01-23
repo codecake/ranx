@@ -18,29 +18,48 @@
 <project name="ranx" default="build" basedir=".">
 	<property name="parser.src" location="antlr"/>
 	<property name="bld.dir" location="bld"/>
-	<property name="parser.dir" location="bld/parser"/> 
+	
+	<!-- root of the generated *.java hierarchy -->
+	<property name="parser.root" location="bld/parser"/>
+	
+	<!-- where the generated java files go -->
+	<property name="parser.dir" location="bld/parser/org/ranx/parser"/>
+	
 	<property name="java.src.dir" location="src"/>
+	<property name="core.src.dir" location="src/org/ranx/core"/>
+	<property name="runner.src.dir" location="src/org/ranx/runner"/>
 	<property name="java.out.dir" location="bld/classes"/>
 	<property name="lib.dir" location="lib"/>
 	
 	<path id="project.class.path">
-		<pathelement path="${classpath}"/>
+		<!--pathelement path="${classpath}"/-->
 		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
 		</fileset>
 		<pathelement location="${java.out.dir}"/>
 	</path>
 	
-	<target name="build" depends="compile">
+	<target name="build" depends="compile.core, compile.parser">
 	</target>
 	
 	<target name="init">
 		<mkdir dir="${bld.dir}"/>
+		<mkdir dir="${parser.root}"/>
 		<mkdir dir="${parser.dir}"/>
 		<mkdir dir="${java.out.dir}"/>
 	</target>
 	
-	<target name="generate.parser" depends="init">
+	<!-- check if we need to run ANTLR, set parser.up.to.date if we don't -->
+	<target name="check.parser.files">
+		<dependset>
+			<srcfileset dir="${parser.src}" includes = "*.g" />
+			<targetfileset dir="${parser.dir}" includes = "*"/>
+		</dependset>
+		<available property="parser.up.to.date" file="${parser.dir}/Ranx.tokens" />
+	</target>
+	
+	<!-- runs ANTLR, if needed -->
+	<target name="generate.parser" depends="init, check.parser.files" unless="parser.up.to.date">
 		<java classname="org.antlr.Tool">
 			<classpath refid="project.class.path"/>
 			<arg value="-o"/>
@@ -54,9 +73,14 @@
 		<delete dir="${bld.dir}" />
 	</target>
 	
-	<target name="compile" depends="init">
+	<target name="compile" depends="init, compile.runner">
+	</target>
+	
+	<!-- compile core library - this is required to compile parser -->
+	<target name="compile.core" depends="init">
 		<javac 
-			srcdir="${java.src.dir}" 
+			srcdir="${java.src.dir}"
+			includes="org/ranx/core/**"
 			destdir="${java.out.dir}" 
 			includeAntRuntime="false"
 			debug="on"
@@ -65,9 +89,22 @@
 		</javac>
 	</target>
 	
-	<target name="compile.parser" depends="init, generate.parser">
+	<target name="compile.parser" depends="init, generate.parser, compile.core">
 		<javac 
-			srcdir="${parser.dir}" 
+			srcdir="${parser.root}" 
+			includes="org/ranx/parser/**"
+			destdir="${java.out.dir}" 
+			includeAntRuntime="false"
+			debug="on"
+		>
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+	
+	<target name="compile.runner" depends="compile.core, compile.parser">
+		<javac 
+			srcdir="${java.src.dir}" 
+			includes="org/ranx/runner/**"
 			destdir="${java.out.dir}" 
 			includeAntRuntime="false"
 			debug="on"

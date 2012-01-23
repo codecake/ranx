@@ -24,32 +24,34 @@ options {
 
 @header {
 package org.ranx.parser;
+
+import org.ranx.core.*;
 }
 
 @members {
 }
 
-expr 
-	: ^('+' a=expr b=expr) {}
-	| ^('-' a=expr b=expr) {}
-	| ^('*' a=expr b=expr) {}
-	| ^('/' a=expr b=expr) {}
-	| var {}
+expr returns [Node value]
+	: ^('+' a=expr b=expr) { $value = NodeExpressionFactory.add(a, b); }
+	| ^('-' a=expr b=expr) { $value = NodeExpressionFactory.subtract(a, b); }
+	| ^('*' a=expr b=expr) { $value = NodeExpressionFactory.multiply(a, b); }
+	| ^('/' a=expr b=expr) { $value = NodeExpressionFactory.divide(a, b); }
+	| var { $value = org.ranx.core.Runtime.var($var.value); }
 	| ^(':' c=var d=var) {}
-	| val {}
+	| val { $value = new ValueNode($val.value); }
 	;
 	
-var 
-	: ^(VAR SCALAR ID_SCALAR) {}
-	| ^(VAR A1 ID_A1) {}
-	| ^(VAR RC ID_RC) {}
+var returns [String value]
+	: ^(VAR SCALAR ID_SCALAR) { $value = $ID_SCALAR.text; }
+	| ^(VAR A1 ID_A1) { $value = $ID_A1.text; }
+	| ^(VAR RC ID_RC) { $value = $ID_RC.text; }
 	;
 	
-val 
-	: ^(VALUE INT_TYPE INT) {}
-	| ^(VALUE FLOAT_TYPE INT) {}
-	| ^(VALUE STRING_TYPE INT) {}
-	| ^(VALUE BOOL_TYPE INT) {}
+val returns [Value value]
+	: ^(VALUE INT_TYPE INT) { $value = new IntValue(Integer.parseInt($INT.text)); }
+	| ^(VALUE FLOAT_TYPE FLOAT) { $value = new FloatValue(Double.parseDouble($FLOAT.text)); }
+	| ^(VALUE STRING_TYPE STRING) { $value = new StringValue($STRING.text); }
+	| ^(VALUE BOOL_TYPE BOOL) { $value = new BoolValue(Boolean.parseBoolean($BOOL.text)); }
 	;
 	
 prog 
@@ -60,11 +62,17 @@ prog
 	;
 	
 printExpr 
-	: ^('?' expr) {}
+	: ^('?' expr) {
+			try { 
+				System.out.println($expr.value.value());
+			} catch (InvalidOperation e) {
+				System.err.println(e.toString());
+			} 
+		}
 	;
 	
 assignExpr
-	: ^('=' var expr) {}
+	: ^('=' var expr) { org.ranx.core.Runtime.var($var.value, $expr.value); }
 	;
 	
 deps
