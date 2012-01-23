@@ -1,0 +1,2 @@
+#!/bin/bash
+java -cp $CLASSPATH:../lib/antlrworks-1.4.3.jar:../bld/classes org.ranx.Runner
