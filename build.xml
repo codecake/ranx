@@ -45,8 +45,8 @@
 			<classpath refid="project.class.path"/>
 			<arg value="-o"/>
 			<arg value="${parser.dir}"/>
-			<arg value="${parser.src}/ranx.g"/>
-			<arg value="${parser.src}/eval.g"/>
+			<arg value="${parser.src}/Ranx.g"/>
+			<arg value="${parser.src}/Eval.g"/>
 		</java>
 	</target>
 	
@@ -57,6 +57,17 @@
 	<target name="compile" depends="init">
 		<javac 
 			srcdir="${java.src.dir}" 
+			destdir="${java.out.dir}" 
+			includeAntRuntime="false"
+			debug="on"
+		>
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+	
+	<target name="compile.parser" depends="init, generate.parser">
+		<javac 
+			srcdir="${parser.dir}" 
 			destdir="${java.out.dir}" 
 			includeAntRuntime="false"
 			debug="on"
@@ -78,6 +89,12 @@
 			</batchtest>
 		</junit>
 		
+	</target>
+	
+	<target name="repl" depends="compile">
+		<java classname="org.ranx.Runner" fork="true">
+			<classpath refid="project.class.path"/>
+		</java>
 	</target>
 
 </project>
