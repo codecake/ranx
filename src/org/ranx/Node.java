@@ -32,6 +32,12 @@ public class Node {
 	public void expression(Expression expr_) { _expr = expr_; }
 	
 	public boolean valid() { return _valid; }
+	public void invalidate() {
+		_valid = false;
+		for(Node n : outs()) {
+			n.invalidate();
+		}
+	}
 
 	private HashSet<Node> _ins = new HashSet<Node>();
 	private HashSet<Node> _outs = new HashSet<Node>();
