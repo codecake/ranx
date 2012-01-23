@@ -18,11 +18,20 @@
 
 package org.ranx;
 
+/**
+ * Expression adding two things
+ *
+ */
 public class AddExpression extends Expression {
 
 	private Expression _lhs;
 	private Expression _rhs;
 	
+	/**
+	 * Creates the expression
+	 * @param lhs_ first thing to add
+	 * @param rhs_ second thing to add
+	 */
 	public AddExpression(Expression lhs_, Expression rhs_) { 
 		_lhs = lhs_;
 		_rhs = rhs_;

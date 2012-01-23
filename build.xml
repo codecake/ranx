@@ -23,6 +23,14 @@
 	<property name="java_out_dir" location="bld/classes"/>
 	<property name="lib_dir" location="lib"/>
 	
+	<path id="project.class.path">
+		<pathelement path="${classpath}"/>
+		<fileset dir="${lib_dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement location="${java_out_dir}"/>
+	</path>
+	
 	<target name="build" depends="compile">
 	</target>
 	
@@ -50,18 +58,16 @@
 			destdir="${java_out_dir}" 
 			includeAntRuntime="false"
 			debug="on"
-			classpath="${lib_dir}/junit-4.10.jar"
-		/>
+		>
+			<classpath refid="project.class.path"/>
+		</javac>
 	</target>
 	
 	<target name="test" depends="compile">
 		<junit 
 			haltonerror="true" 
 			haltonfailure="true">
-			<classpath>
-				<pathelement location="${java_out_dir}"/>
-				<pathelement location="${lib_dir}/junit-4.10.jar"/>
-			</classpath>
+			<classpath refid="project.class.path"/>
 			<batchtest>
  				<formatter type="brief" usefile="false"/>
  				<fileset dir="${java_out_dir}">

@@ -15,18 +15,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.ranx.test;
+package org.ranx;
 
-import org.ranx.*;
-import org.junit.*;
+import java.util.HashSet;
 
-public class AddExpressionTest extends Assert {
+public abstract class NodeExpression extends Expression {
 
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+	private HashSet<Node> _ins = new HashSet<Node>();
+	private Node _node;
+	
+	public NodeExpression(Node node_) {
+		_node = node_;
 	}
+	
+	public Node node() { return _node; }
+
+	public void addIn(Node in) { _ins.add(in); }
+	public void dropIns() { _ins.clear(); }
 }

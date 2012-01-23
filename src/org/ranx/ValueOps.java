@@ -17,7 +17,20 @@
 
 package org.ranx;
 
+/**
+ * Defines operations on values
+ * @author codecake
+ *
+ */
 public class ValueOps {
+
+	/**
+	 * Adds two values
+	 * @param lhs first value to add
+	 * @param rhs second value to add
+	 * @return result
+	 * @throws InvalidOperation if values cannot be added
+	 */
 	public static Value add(Value lhs, Value rhs) throws InvalidOperation {
 		try {
 			if(lhs.canCastToInt() && rhs.canCastToInt()) {
@@ -31,6 +44,13 @@ public class ValueOps {
 		throw new InvalidOperation();
 	}
 	
+	/**
+	 * Subtracts two values
+	 * @param lhs value to subtract from
+	 * @param rhs value being subtracted
+	 * @return result
+	 * @throws InvalidOperation if values cannot be subtracted
+	 */
 	public static Value subtract(Value lhs, Value rhs) throws InvalidOperation {
 		try {
 			if(lhs.canCastToInt() && rhs.canCastToInt()) {
@@ -44,6 +64,13 @@ public class ValueOps {
 		throw new InvalidOperation();
 	}
 	
+	/**
+	 * Multiplies two values
+	 * @param lhs first value to multiply
+	 * @param rhs second value to multiply
+	 * @return result
+	 * @throws InvalidOperation if values cannot be multiplied
+	 */
 	public static Value multiply(Value lhs, Value rhs) throws InvalidOperation {
 		try {
 			if(lhs.canCastToInt() && rhs.canCastToInt()) {
@@ -57,6 +84,13 @@ public class ValueOps {
 		throw new InvalidOperation();
 	}
 	
+	/**
+	 * Divides two values
+	 * @param lhs value to divide
+	 * @param rhs value to divide by
+	 * @return result
+	 * @throws InvalidOperation if values cannot be divided
+	 */
 	public static Value divide(Value lhs, Value rhs) throws InvalidOperation {
 		try {
 			if(lhs.canCastToInt() && rhs.canCastToInt()) {
@@ -68,5 +102,20 @@ public class ValueOps {
 			throw new InvalidOperation(e);
 		}
 		throw new InvalidOperation();
+	}
+	
+	/**
+	 * Concatenates two values as strings
+	 * @param one first string to concatenate
+	 * @param two second string to concatenate
+	 * @return concatenated string
+	 * @throws InvalidOperation that really shouldn't happen
+	 */
+	public static Value concat(Value one, Value two) throws InvalidOperation {
+		try {
+			return new StringValue(one.asString().concat(two.asString()));
+		} catch(InvalidCast e) {
+			throw new InvalidOperation(e);
+		}
 	}
 }

@@ -18,6 +18,9 @@
 package org.ranx;
 
 public class InvalidCast extends Exception {
+	
+	private static final long serialVersionUID = 1L;
+	
 	public InvalidCast() {}
 	public InvalidCast(String message) { super(message); }
 	public InvalidCast(String message, Throwable cause) { super(message, cause); }

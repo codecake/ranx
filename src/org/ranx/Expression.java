@@ -18,7 +18,16 @@
 
 package org.ranx;
 
+/**
+ * Expression that represents operation on values 
+ *
+ */
 public abstract class Expression {
+	/**
+	 * Perform the operation
+	 * @return result of the operation
+	 * @throws InvalidOperation exception thrown if the operation cannot be performed, for whatever reason
+	 */
 	public abstract Value eval() throws InvalidOperation;
 }
 

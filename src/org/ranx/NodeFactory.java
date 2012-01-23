@@ -14,19 +14,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+package org.ranx;
 
-package org.ranx.test;
-
-import org.ranx.*;
-import org.junit.*;
-
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
-	}
+public class NodeFactory {
+	public static ValueNode create(int value_) { return new ValueNode(new IntValue(value_)); }
+	public static ValueNode create(double value_) { return new ValueNode(new FloatValue(value_)); }
+	public static ValueNode create(String value_) { return new ValueNode(new StringValue(value_)); }
+	public static ValueNode create(boolean value_) { return new ValueNode(new BoolValue(value_)); }
 }

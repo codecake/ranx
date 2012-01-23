@@ -76,6 +76,7 @@ public class ValueOpsTest extends Assert {
 		Value rhs = new StringValue("abc");
 		try {
 			Value result = ValueOps.add(lhs, rhs);
+			result.asInt(); // dummy - to avoid Eclipse warning
 			fail("added strings somehow");
 		} catch(InvalidOperation e) {
 			// expected
@@ -136,6 +137,7 @@ public class ValueOpsTest extends Assert {
 		Value rhs = new StringValue("abc");
 		try {
 			Value result = ValueOps.subtract(lhs, rhs);
+			result.asInt(); // dummy - to avoid Eclipse warning
 			fail("subtracted strings somehow");
 		} catch(InvalidOperation e) {
 			// expected
@@ -196,6 +198,7 @@ public class ValueOpsTest extends Assert {
 		Value rhs = new StringValue("abc");
 		try {
 			Value result = ValueOps.multiply(lhs, rhs);
+			result.asInt(); // dummy - to avoid Eclipse warning
 			fail("multiplied strings somehow");
 		} catch(InvalidOperation e) {
 			// expected
@@ -256,10 +259,30 @@ public class ValueOpsTest extends Assert {
 		Value rhs = new StringValue("abc");
 		try {
 			Value result = ValueOps.divide(lhs, rhs);
+			result.asInt(); // dummy - to avoid Eclipse warning
 			fail("divided strings somehow");
 		} catch(InvalidOperation e) {
 			// expected
 		}
 	}
 	
+	//
+	// concat
+	// 
+	
+	@Test public void concatStrings() throws InvalidOperation, InvalidCast {
+		Value lhs = Value.of("foo");
+		Value rhs = Value.of("bar");
+		Value res = ValueOps.concat(lhs, rhs);
+		assertTrue(res.isString());
+		assertEquals("foobar", res.asString());
+	}
+	
+	@Test public void concatNonStrings() throws InvalidOperation, InvalidCast {
+		Value lhs = Value.of(123);
+		Value rhs = Value.of(456);
+		Value res = ValueOps.concat(lhs, rhs);
+		assertTrue(res.isString());
+		assertEquals("123456", res.asString());		
+	}
 }

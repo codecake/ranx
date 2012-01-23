@@ -19,11 +19,37 @@
 package org.ranx;
 
 public abstract class Value {
+	/**
+	 * Returns the type of the value
+	 * @return type of the value
+	 */
 	public abstract ValueType type();
+	
+	/**
+	 * Returns true of the value can be cast to the given type
+	 * @param target type to be cast to
+	 * @return true of the value can be cast to the given type
+	 */
 	public abstract boolean canCastTo(ValueType target);
+	
+	/**
+	 * Performs cast to the given type
+	 * @param target type to be cast to
+	 * @return Value of the given type, if the cast is successful
+	 * @throws InvalidCast if the cast cannot be done
+	 */
 	public abstract Value castTo(ValueType target) throws InvalidCast;
 	
+	/**
+	 * Checks if this value is of type int
+	 * @return true if this is int
+	 */
 	public boolean isInt() { return type() == ValueType.TInt; }
+	
+	/**
+	 * Checks if this value is of type float
+	 * @return true if this is float
+	 */
 	public boolean isFloat() { return type() == ValueType.TFloat; }
 	public boolean isBool() { return type() == ValueType.TBool; }
 	public boolean isString() { return type() == ValueType.TString; }
@@ -37,4 +63,18 @@ public abstract class Value {
 	public FloatValue toFloat() throws InvalidCast { return (FloatValue) castTo(ValueType.TFloat); }
 	public BoolValue toBool() throws InvalidCast { return (BoolValue) castTo(ValueType.TBool); }
 	public StringValue toStr() throws InvalidCast { return (StringValue) castTo(ValueType.TString); }
+	
+	public int asInt() throws InvalidCast { return toInt().get(); }
+	public double asDouble() throws InvalidCast { return toFloat().get(); }
+	public boolean asBool() throws InvalidCast { return toBool().get(); }
+	public String asString() throws InvalidCast { return toStr().get(); }
+	
+	//TODO: test
+	public static Value of(int value_) { return new IntValue(value_); }
+	//TODO: test
+	public static Value of(double value_) { return new FloatValue(value_); }
+	//TODO: test
+	public static Value of(String value_) { return new StringValue(value_); }
+	//TODO: test
+	public static Value of(boolean value_) { return new BoolValue(value_); }
 }

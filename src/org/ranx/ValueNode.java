@@ -15,18 +15,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.ranx.test;
+package org.ranx;
 
-import org.ranx.*;
-import org.junit.*;
-
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+public class ValueNode extends Node {
+	public ValueNode(Value value_) {
+		super(new ValueExpression(value_));
 	}
+	
+	public void set(Value value_) {
+		expression(new ValueExpression(value_));
+	}
+	
+	public void set(int value_) { set(new IntValue(value_)); }
+	public void set(double value_) { set(new FloatValue(value_)); }
+	public void set(String value_) { set(new StringValue(value_)); }
+	public void set(boolean value_) { set(new BoolValue(value_)); }
 }

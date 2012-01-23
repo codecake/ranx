@@ -14,19 +14,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 package org.ranx.test;
 
 import org.ranx.*;
 import org.junit.*;
 
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+public class ValueTest extends Assert {
+	@Test public void isInt() {
+		Value somethingInt = new IntValue(123);
+		assertTrue(somethingInt.isInt());
+		Value somethingNotInt = new FloatValue(456.786);
+		assertFalse(somethingNotInt.isInt());
+	}
+	
+	@Test public void isFloat() {
+		Value somethingFloat = new FloatValue(456.789);
+		assertTrue(somethingFloat.isFloat());
+		Value somethingNotFloat = new StringValue("foobar");
+		assertFalse(somethingNotFloat.isFloat());
 	}
 }

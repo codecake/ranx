@@ -15,18 +15,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.ranx.test;
+package org.ranx;
 
-import org.ranx.*;
-import org.junit.*;
+public class ConstNodeExpression extends NodeExpression {
 
-public class AddExpressionTest extends Assert {
-
-	@Test public void eval() throws InvalidOperation, InvalidCast {
-		Expression expr = new AddExpression(
-			new ValueExpression(new IntValue(123)),
-			new ValueExpression(new IntValue(456))
-		);
-		assertEquals(579, expr.eval().asInt());
+	private Node _source;
+	
+	public ConstNodeExpression(Node node_, Node source_) { 
+		super(node_);
+		_source = source_;
+		_source.connectTo(node_);
 	}
+
+	@Override public Value eval() throws InvalidOperation {
+		return _source.value();
+	}
+
 }

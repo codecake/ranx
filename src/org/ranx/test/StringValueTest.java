@@ -103,6 +103,7 @@ public class StringValueTest extends Assert {
 		for(String s : invalidIntStrings) {
 			try {
 				Value v = new StringValue(s).toInt();
+				v.asInt();	// dummy - to avoid Eclipse warning
 				fail("Exception expected");
 			} catch(InvalidCast e) {
 				// expected
@@ -134,6 +135,7 @@ public class StringValueTest extends Assert {
 		for(String s : invalidFloatStrings) {
 			try {
 				FloatValue v = new StringValue(s).toFloat();
+				v.asDouble(); // dummy - to avoid Eclipse warning
 				fail("Exception expected");
 			} catch(InvalidCast e) {
 				// expected
