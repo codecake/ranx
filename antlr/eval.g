@@ -18,7 +18,7 @@
 tree grammar eval;
 
 options {
-	tokenVocab = Ranx;
+	tokenVocab = ranx;
 	ASTLabelType = CommonTree;
 }
 

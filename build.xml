@@ -41,11 +41,13 @@
 	</target>
 	
 	<target name="generate.parser" depends="init">
-		<exec executable="antlr3">
+		<java classname="org.antlr.Tool">
+			<classpath refid="project.class.path"/>
 			<arg value="-o"/>
 			<arg value="${parser.dir}"/>
 			<arg value="${parser.src}/ranx.g"/>
-		</exec>
+			<arg value="${parser.src}/eval.g"/>
+		</java>
 	</target>
 	
 	<target name="clean">
