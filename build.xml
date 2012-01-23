@@ -26,8 +26,6 @@
 	<property name="parser.dir" location="bld/parser/org/ranx/parser"/>
 	
 	<property name="java.src.dir" location="src"/>
-	<property name="core.src.dir" location="src/org/ranx/core"/>
-	<property name="runner.src.dir" location="src/org/ranx/runner"/>
 	<property name="java.out.dir" location="bld/classes"/>
 	<property name="lib.dir" location="lib"/>
 	
