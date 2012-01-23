@@ -16,46 +16,46 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <project name="ranx" default="build" basedir=".">
-	<property name="parser_src" location="antlr"/>
-	<property name="bld_dir" location="bld"/>
-	<property name="parser_dir" location="bld/parser"/> 
-	<property name="java_src_dir" location="src"/>
-	<property name="java_out_dir" location="bld/classes"/>
-	<property name="lib_dir" location="lib"/>
+	<property name="parser.src" location="antlr"/>
+	<property name="bld.dir" location="bld"/>
+	<property name="parser.dir" location="bld/parser"/> 
+	<property name="java.src.dir" location="src"/>
+	<property name="java.out.dir" location="bld/classes"/>
+	<property name="lib.dir" location="lib"/>
 	
 	<path id="project.class.path">
 		<pathelement path="${classpath}"/>
-		<fileset dir="${lib_dir}">
+		<fileset dir="${lib.dir}">
 			<include name="**/*.jar"/>
 		</fileset>
-		<pathelement location="${java_out_dir}"/>
+		<pathelement location="${java.out.dir}"/>
 	</path>
 	
 	<target name="build" depends="compile">
 	</target>
 	
 	<target name="init">
-		<mkdir dir="${bld_dir}"/>
-		<mkdir dir="${parser_dir}"/>
-		<mkdir dir="${java_out_dir}"/>
+		<mkdir dir="${bld.dir}"/>
+		<mkdir dir="${parser.dir}"/>
+		<mkdir dir="${java.out.dir}"/>
 	</target>
 	
-	<target name="generate_parser" depends="init">
+	<target name="generate.parser" depends="init">
 		<exec executable="antlr3">
 			<arg value="-o"/>
-			<arg value="${parser_dir}"/>
-			<arg value="${parser_src}/ranx.g"/>
+			<arg value="${parser.dir}"/>
+			<arg value="${parser.src}/ranx.g"/>
 		</exec>
 	</target>
 	
 	<target name="clean">
-		<delete dir="${bld_dir}" />
+		<delete dir="${bld.dir}" />
 	</target>
 	
 	<target name="compile" depends="init">
 		<javac 
-			srcdir="${java_src_dir}" 
-			destdir="${java_out_dir}" 
+			srcdir="${java.src.dir}" 
+			destdir="${java.out.dir}" 
 			includeAntRuntime="false"
 			debug="on"
 		>
@@ -70,7 +70,7 @@
 			<classpath refid="project.class.path"/>
 			<batchtest>
  				<formatter type="brief" usefile="false"/>
- 				<fileset dir="${java_out_dir}">
+ 				<fileset dir="${java.out.dir}">
 					<include name="**/*Test.class"/>
 				</fileset>
 			</batchtest>
