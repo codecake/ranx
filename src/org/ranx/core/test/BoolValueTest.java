@@ -36,4 +36,12 @@ public class BoolValueTest extends Assert {
 		BoolValue v = new BoolValue(false);
 		assertEquals(ValueType.TBool, v.type());
 	}
+	
+	@Test public void canCastTo() {
+		BoolValue v = new BoolValue(true);
+		assertTrue(v.canCastTo(ValueType.TString));
+		assertTrue(v.canCastTo(ValueType.TBool));
+		assertFalse(v.canCastTo(ValueType.TInt));
+		assertFalse(v.canCastTo(ValueType.TFloat));
+	}
 }

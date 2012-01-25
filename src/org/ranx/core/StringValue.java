@@ -50,6 +50,8 @@ public class StringValue extends Value {
 		throw new InvalidCast();
 	}
 	
+	@Override public String toString() { return _value; }
+	
 	private Pattern intRegex = Pattern.compile("\\A\\s*-?\\s*\\d+\\s*\\z");
 	private Pattern floatRegex = Pattern.compile("\\A\\s*-?\\s*\\d+(\\.\\d+)?([eE]-?\\d+)?\\s*\\z");
 }

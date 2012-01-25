@@ -39,7 +39,7 @@ public class Runner {
 	 
 	        RanxParser parser = new RanxParser(tokens); 
 	        RanxParser.formula_return r = parser.formula(); 
-	        if ( r!=null ) System.out.println(((CommonTree)r.getTree()).toStringTree());
+	        if ( r!=null ) _runtime.console().printDebugLine(((CommonTree)r.getTree()).toStringTree());
 	 
 	        CommonTreeNodeStream nodes = new CommonTreeNodeStream((Tree)r.getTree());
 	        nodes.setTokenStream(tokens);

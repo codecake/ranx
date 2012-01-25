@@ -26,6 +26,20 @@ public class BoolValue extends Value {
 	public boolean get() { return _value; }
 
 	@Override public ValueType type() { return ValueType.TBool; }
-	@Override public boolean canCastTo(ValueType target) { return false; }
-	@Override public Value castTo(ValueType target) throws InvalidCast { return null; }
+	
+	@Override public boolean canCastTo(ValueType target) { 
+		switch(target) {
+		case TBool : return true;
+		case TString : return true;
+		case TInt : return false;
+		case TFloat : return false;
+		}
+		return false;
+	}
+	
+	@Override public Value castTo(ValueType target) throws InvalidCast {
+		return null;
+	}
+	
+	@Override public String toString() { return new Boolean(_value).toString(); }
 }

@@ -23,13 +23,47 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class RunnerTest extends Assert {
-	@Test public void assignReadVar() {
-		String[] input = { "a=123", "?a" };
+	private void checkOutput(String out, String[] expected) {
+		String[] actual = out.split("\n");
+		assertEquals(expected.length, actual.length);
+		for(int i = 0; i < actual.length; i++) {
+			assertEquals(expected[i], actual[i]);
+		}
+	}
+	
+	@Test public void assignReadIntVar() {
+		String[] input = { "a=123", "?a", "??a" };
 		MockConsole console = new MockConsole(input);
 		org.ranx.core.Runtime runtime = new org.ranx.core.Runtime(console);
 		Runner runner = new Runner(runtime);
 		runner.run();
-		String s = console.out().trim();
-		assertEquals("123", s);
+		checkOutput(console.out(), new String[] { "123", "TInt"} );
+	}
+
+	@Test public void assignReadStringVar() {
+		String[] input = { "a=\"foo\"", "?a", "??a" };
+		MockConsole console = new MockConsole(input);
+		org.ranx.core.Runtime runtime = new org.ranx.core.Runtime(console);
+		Runner runner = new Runner(runtime);
+		runner.run();
+		checkOutput(console.out(), new String[] { "\"foo\"", "TString"} );
+	}
+
+	@Test public void assignReadFloatVar() {
+		String[] input = { "a=123.45", "?a", "??a" };
+		MockConsole console = new MockConsole(input);
+		org.ranx.core.Runtime runtime = new org.ranx.core.Runtime(console);
+		Runner runner = new Runner(runtime);
+		runner.run();
+		checkOutput(console.out(), new String[] { "123.45", "TFloat"} );
+	}
+
+	@Test public void assignReadBoolVar() {
+		String[] input = { "a=true", "?a", "??a" };
+		MockConsole console = new MockConsole(input);
+		org.ranx.core.Runtime runtime = new org.ranx.core.Runtime(console);
+		Runner runner = new Runner(runtime);
+		runner.run();
+		checkOutput(console.out(), new String[] { "true", "TBool"} );
 	}
 }

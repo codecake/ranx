@@ -50,4 +50,6 @@ public class FloatValue extends NumericValue {
 		}
 		throw new InvalidCast("don't know this type");
 	}
+	
+	@Override public String toString() { return new Double(_value).toString(); }
 }

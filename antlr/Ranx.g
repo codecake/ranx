@@ -41,11 +41,13 @@ package org.ranx.parser;
 package org.ranx.parser;
 }
 
-formula :	(def | print | deps | sysCmd ) *;
+formula :	(def | print | printInfo | deps | sysCmd ) *;
 
 def : varName '=' expr+ -> ^('=' varName expr);
 
 print	:	'?' varName -> ^('?' varName);
+
+printInfo	:	'??' varName -> ^('??' varName);
 
 expr 	:	multExpr (('+'^|'-'^) multExpr)*;
 

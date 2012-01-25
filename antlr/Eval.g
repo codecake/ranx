@@ -60,6 +60,7 @@ val returns [Value value]
 	
 prog 
 	: printExpr
+	| printInfo
 	| assignExpr
 	| deps
 	| sysSet
@@ -74,6 +75,15 @@ printExpr
 			} 
 		}
 	;
+	
+printInfo
+	: ^('??' expr) {
+		try {
+			_runtime.console().printLine($expr.value.eval().type().toString());
+		} catch (InvalidOperation e) {
+			_runtime.console().printErrorLine(e.toString());
+		}
+	};
 	
 assignExpr
 	: ^('=' var expr) { _runtime.var($var.value).expression($expr.value); }
