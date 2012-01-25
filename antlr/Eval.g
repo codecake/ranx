@@ -29,16 +29,20 @@ import org.ranx.core.*;
 }
 
 @members {
+	private org.ranx.core.Runtime _runtime;
+	public void setRuntime(org.ranx.core.Runtime runtime_) {
+		_runtime = runtime_;
+	}
 }
 
-expr returns [Node value]
-	: ^('+' a=expr b=expr) { $value = NodeExpressionFactory.add(a, b); }
-	| ^('-' a=expr b=expr) { $value = NodeExpressionFactory.subtract(a, b); }
-	| ^('*' a=expr b=expr) { $value = NodeExpressionFactory.multiply(a, b); }
-	| ^('/' a=expr b=expr) { $value = NodeExpressionFactory.divide(a, b); }
-	| var { $value = org.ranx.core.Runtime.var($var.value); }
+expr returns [Expression value]
+	: ^('+' a=expr b=expr) { $value = new AddExpression(a, b); }
+	| ^('-' a=expr b=expr) { $value = new SubtractExpression(a, b); }
+	| ^('*' a=expr b=expr) { $value = new MultiplyExpression(a, b); }
+	| ^('/' a=expr b=expr) { $value = new DivideExpression(a, b); }
+	| var { $value = _runtime.var($var.value).expression(); }
 	| ^(':' c=var d=var) {}
-	| val { $value = new ValueNode($val.value); }
+	| val { $value = new ValueExpression($val.value); }
 	;
 	
 var returns [String value]
@@ -64,15 +68,15 @@ prog
 printExpr 
 	: ^('?' expr) {
 			try { 
-				System.out.println($expr.value.value());
+				_runtime.console().printLine($expr.value.eval().toString());
 			} catch (InvalidOperation e) {
-				System.err.println(e.toString());
+				_runtime.console().printErrorLine(e.toString());
 			} 
 		}
 	;
 	
 assignExpr
-	: ^('=' var expr) { org.ranx.core.Runtime.var($var.value, $expr.value); }
+	: ^('=' var expr) { _runtime.var($var.value).expression($expr.value); }
 	;
 	
 deps

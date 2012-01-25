@@ -14,29 +14,39 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 package org.ranx.core;
 
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public class Runtime {
-	private HashMap<String, Node> _vars = new HashMap<String, Node>();
-	private Console _console;
-	
-	public Runtime() {
-		_console = new InteractiveConsole();
+public class InteractiveConsole extends Console {
+
+	InputStreamReader converter = new InputStreamReader(System.in);
+	BufferedReader reader = new BufferedReader(converter);
+
+	@Override
+	public void print(String s) {
+		System.out.print(s);
 	}
-	
-	public Runtime(Console console_) {
-		_console = console_;
+
+	@Override
+	public void printError(String s) {
+		System.err.print(s);
 	}
-	
-	public Node var(String name_) {
-		if(!_vars.containsKey(name_)) {
-			_vars.put(name_, new Node());
+
+	@Override
+	public String readLine() {
+		try {
+			return reader.readLine();
+		} catch(IOException e) {
+			return e.toString();
 		}
-		return _vars.get(name_);
 	}
-	
-	public Console console() { return _console; }
+
+	@Override
+	public void printDebug(String s) {
+		System.out.println(s);
+	}
+
 }

@@ -39,4 +39,8 @@ public class IntValue extends NumericValue {
 		}
 		throw new InvalidCast();
 	}
+	
+	@Override public String toString() {
+		return new Integer(_value).toString();
+	}
 }

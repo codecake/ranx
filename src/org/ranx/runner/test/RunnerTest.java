@@ -14,29 +14,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+package org.ranx.runner.test;
 
-package org.ranx.core;
+import org.ranx.core.*;
+import org.ranx.runner.Runner;
 
-import java.util.HashMap;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class Runtime {
-	private HashMap<String, Node> _vars = new HashMap<String, Node>();
-	private Console _console;
-	
-	public Runtime() {
-		_console = new InteractiveConsole();
+public class RunnerTest extends Assert {
+	@Test public void assignReadVar() {
+		String[] input = { "a=123", "?a" };
+		MockConsole console = new MockConsole(input);
+		org.ranx.core.Runtime runtime = new org.ranx.core.Runtime(console);
+		Runner runner = new Runner(runtime);
+		runner.run();
+		String s = console.out().trim();
+		assertEquals("123", s);
 	}
-	
-	public Runtime(Console console_) {
-		_console = console_;
-	}
-	
-	public Node var(String name_) {
-		if(!_vars.containsKey(name_)) {
-			_vars.put(name_, new Node());
-		}
-		return _vars.get(name_);
-	}
-	
-	public Console console() { return _console; }
 }

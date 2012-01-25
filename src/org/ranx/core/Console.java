@@ -14,29 +14,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
 package org.ranx.core;
 
-import java.util.HashMap;
-
-public class Runtime {
-	private HashMap<String, Node> _vars = new HashMap<String, Node>();
-	private Console _console;
-	
-	public Runtime() {
-		_console = new InteractiveConsole();
+public abstract class Console {
+	public abstract void print(String s);
+	public void printLine(String s) {
+		print(s);
+		print("\n");
 	}
 	
-	public Runtime(Console console_) {
-		_console = console_;
+	public abstract void printError(String s);
+	public void printErrorLine(String s) {
+		printError(s);
+		printError("\n");
 	}
 	
-	public Node var(String name_) {
-		if(!_vars.containsKey(name_)) {
-			_vars.put(name_, new Node());
-		}
-		return _vars.get(name_);
-	}
+	public abstract String readLine();
 	
-	public Console console() { return _console; }
+	public abstract void printDebug(String s);
+	public void printDebugLine(String s) {
+		printDebug(s);
+		printDebug("\n");
+	}
 }
