@@ -62,5 +62,23 @@ public class RuntimeContextTest extends Assert {
 		assertEquals(rc, RuntimeContext.current());
 		assertEquals(2, rc.getRegistered().size());
 	}
+	
+	@Test public void verifyThreadContext() throws InterruptedException {
+		RuntimeContext rc = RuntimeContext.current();
+		assertEquals(0, rc.getRegistered().size());
+		Node n1 = new Node();
+		Node n2 = new Node();
+		rc.registerNode(n1);
+		rc.registerNode(n2);
+		assertEquals(2, rc.getRegistered().size());
+		
+		Thread t = new Thread() {
+			@Override public void run() {
+				assertEquals(0, RuntimeContext.current().getRegistered().size());
+			}
+		};
+		t.start();
+		t.join();
+	}
 
 }
