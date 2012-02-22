@@ -22,6 +22,10 @@ import org.junit.*;
 
 public class RuntimeContextTest extends Assert {
 	
+	@Before public void clearRegisteredNodesBefore() {
+		RuntimeContext.current().clear();
+	}
+	
 	@After public void clearRegisteredNodes() {
 		RuntimeContext.current().clear();
 	}

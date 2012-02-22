@@ -22,6 +22,14 @@ import org.junit.*;
 
 public class NodeTest extends Assert {
 
+	@Before public void clearBefore() {
+		RuntimeContext.current().clear();
+	}
+	
+	@After public void clearAfter() {
+		RuntimeContext.current().clear();
+	}
+
 	@Test public void addRemoveIns() {
 		Node n = new Node();
 		Node in1 = new Node();
@@ -97,5 +105,25 @@ public class NodeTest extends Assert {
 		assertFalse(sum.valid());
 		assertEquals(567, sum.value().asInt());
 		assertTrue(sum.valid());
+	}
+	
+	@Test public void simpleAddToContext() throws InvalidOperation {
+		ValueNode n = NodeFactory.create(123);
+		assertEquals(0, RuntimeContext.current().getRegistered().size());
+		n.value();
+		assertEquals(1, RuntimeContext.current().getRegistered().size());
+		assertTrue(RuntimeContext.current().getRegistered().contains(n));
+	}
+	
+	@Test public void gatherIns() throws InvalidOperation, InvalidCast {
+		ValueNode in1 = NodeFactory.create(123);
+		ValueNode in2 = NodeFactory.create(456);
+		Node sum = new Node();
+		sum.expression(new AddExpression(in1, in2));
+		assertEquals(0, sum.ins().length);
+		assertEquals(579, sum.value().asInt());
+		assertEquals(2, sum.ins().length);
+		assertTrue(sum.isConnectedFrom(in1));
+		assertTrue(sum.isConnectedFrom(in2));
 	}
 }

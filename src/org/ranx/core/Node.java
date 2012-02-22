@@ -20,7 +20,7 @@ package org.ranx.core;
 
 import java.util.HashSet;
 
-public class Node {
+public class Node extends Expression {
 	private Value _value;
 	private Expression _expr = null;
 	private boolean _valid = false;
@@ -136,13 +136,22 @@ public class Node {
 	 * @return node's value
 	 * @throws InvalidOperation
 	 */
-	public Value value() throws InvalidOperation { 
+	public Value value() throws InvalidOperation {
+		RuntimeContext.current().registerNode(this);
 		if(_valid) {
 			return _value;
 		}
+		_ins.clear();
+		RuntimeContext.push();
 		_value = _expr.eval();
 		_valid = true;
+		_ins = RuntimeContext.current().getRegistered();
+		RuntimeContext.pop();
 		return _value;
+	}
+	
+	public Value eval() throws InvalidOperation {
+		return value();
 	}
 	
 	/**
