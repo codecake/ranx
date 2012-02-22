@@ -33,7 +33,7 @@ public class NodeExpressionFactory {
 	 */
 	public static Node add(Node lhs_, Node rhs_) {
 		Node n = new Node();
-		n.expression(new AddNodeExpression(n, lhs_, rhs_));
+		n.expression(new AddExpression(lhs_, rhs_));
 		return n;
 	}
 	
@@ -45,7 +45,7 @@ public class NodeExpressionFactory {
 	 */
 	public static Node subtract(Node lhs_, Node rhs_) {
 		Node n = new Node();
-		n.expression(new SubtractNodeExpression(n, lhs_, rhs_));
+		n.expression(new SubtractExpression(lhs_, rhs_));
 		return n;
 	}
 	
@@ -57,7 +57,7 @@ public class NodeExpressionFactory {
 	 */
 	public static Node multiply(Node lhs_, Node rhs_) {
 		Node n = new Node();
-		n.expression(new MultiplyNodeExpression(n, lhs_, rhs_));
+		n.expression(new MultiplyExpression(lhs_, rhs_));
 		return n;
 	}
 	
@@ -69,7 +69,7 @@ public class NodeExpressionFactory {
 	 */
 	public static Node divide(Node lhs_, Node rhs_) {
 		Node n = new Node();
-		n.expression(new DivideNodeExpression(n, lhs_, rhs_));
+		n.expression(new DivideExpression(lhs_, rhs_));
 		return n;
 	}
 }

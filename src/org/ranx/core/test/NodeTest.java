@@ -126,4 +126,13 @@ public class NodeTest extends Assert {
 		assertTrue(sum.isConnectedFrom(in1));
 		assertTrue(sum.isConnectedFrom(in2));
 	}
+	
+	@Test public void connectAndInvalidate() throws InvalidOperation, InvalidCast {
+		/*
+		ValueNode in1 = NodeFactory.create(123);
+		ValueNode in2 = NodeFactory.create(456);
+		Node sum = new Node();
+		sum.expression(new AddExpression(in1, in2));
+		*/
+	}
 }

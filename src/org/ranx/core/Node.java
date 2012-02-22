@@ -145,7 +145,9 @@ public class Node extends Expression {
 		RuntimeContext.push();
 		_value = _expr.eval();
 		_valid = true;
-		_ins = RuntimeContext.current().getRegistered();
+		for(Node i: RuntimeContext.current().getRegistered()) {
+			i.connectTo(this);
+		}
 		RuntimeContext.pop();
 		return _value;
 	}
