@@ -28,7 +28,7 @@ public class ConstNodeExpression extends NodeExpression {
 	}
 
 	@Override public Value eval() throws InvalidOperation {
-		return _source.value();
+		return _source.eval();
 	}
 
 }

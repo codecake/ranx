@@ -32,7 +32,7 @@ public class DivideNodeExpression extends NodeExpression {
 
 	@Override
 	public Value eval() throws InvalidOperation {
-		return ValueOps.divide(_lhs.value(), _rhs.value());
+		return ValueOps.divide(_lhs.eval(), _rhs.eval());
 	}
 
 }

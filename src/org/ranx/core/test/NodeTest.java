@@ -57,7 +57,7 @@ public class NodeTest extends Assert {
 	@Test public void eval() throws InvalidOperation, InvalidCast {
 		Node n = new Node(new ValueExpression(new IntValue(123)));
 		assertFalse(n.valid());
-		assertEquals(123, n.value().toInt().get());
+		assertEquals(123, n.eval().toInt().get());
 		assertTrue(n.valid());
 	}
 	
@@ -87,7 +87,7 @@ public class NodeTest extends Assert {
 		n1.addOut(n2);
 		n2.addIn(n1);
 		assertFalse(n2.valid());
-		assertEquals(123, n2.value().toInt().get());
+		assertEquals(123, n2.eval().toInt().get());
 		assertTrue(n2.valid());
 		n1.invalidate();
 		assertFalse(n1.valid());
@@ -99,18 +99,18 @@ public class NodeTest extends Assert {
 		ValueNode in2 = NodeFactory.create(456);
 		Node sum = NodeExpressionFactory.add(in1, in2);
 		assertFalse(sum.valid());
-		assertEquals(579, sum.value().asInt());
+		assertEquals(579, sum.eval().asInt());
 		assertTrue(sum.valid());
 		in1.set(111);
 		assertFalse(sum.valid());
-		assertEquals(567, sum.value().asInt());
+		assertEquals(567, sum.eval().asInt());
 		assertTrue(sum.valid());
 	}
 	
 	@Test public void simpleAddToContext() throws InvalidOperation {
 		ValueNode n = NodeFactory.create(123);
 		assertEquals(0, RuntimeContext.current().getRegistered().size());
-		n.value();
+		n.eval();
 		assertEquals(1, RuntimeContext.current().getRegistered().size());
 		assertTrue(RuntimeContext.current().getRegistered().contains(n));
 	}
@@ -121,7 +121,7 @@ public class NodeTest extends Assert {
 		Node sum = new Node();
 		sum.expression(new AddExpression(in1, in2));
 		assertEquals(0, sum.ins().length);
-		assertEquals(579, sum.value().asInt());
+		assertEquals(579, sum.eval().asInt());
 		assertEquals(2, sum.ins().length);
 		assertTrue(sum.isConnectedFrom(in1));
 		assertTrue(sum.isConnectedFrom(in2));

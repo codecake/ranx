@@ -136,7 +136,7 @@ public class Node extends Expression {
 	 * @return node's value
 	 * @throws InvalidOperation
 	 */
-	public Value value() throws InvalidOperation {
+	public Value eval() throws InvalidOperation {
 		RuntimeContext.current().registerNode(this);
 		if(_valid) {
 			return _value;
@@ -148,10 +148,6 @@ public class Node extends Expression {
 		_ins = RuntimeContext.current().getRegistered();
 		RuntimeContext.pop();
 		return _value;
-	}
-	
-	public Value eval() throws InvalidOperation {
-		return value();
 	}
 	
 	/**

@@ -26,12 +26,12 @@ public class SubtractNodeExpressionTest extends Assert {
 		Node sum = new Node();
 		sum.expression(new SubtractNodeExpression(sum, in1, in2));
 		assertFalse(sum.valid());
-		assertEquals(-333, sum.value().asInt());
+		assertEquals(-333, sum.eval().asInt());
 		assertTrue(sum.valid());
 		in1.invalidate();
 		assertFalse(sum.valid());
 		in1.set(222);
-		assertEquals(-234, sum.value().asInt());
+		assertEquals(-234, sum.eval().asInt());
 		assertTrue(sum.valid());
 	}
 }

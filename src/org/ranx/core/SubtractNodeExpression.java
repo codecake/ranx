@@ -31,6 +31,6 @@ public class SubtractNodeExpression extends NodeExpression {
 
 	@Override
 	public Value eval() throws InvalidOperation {
-		return ValueOps.subtract(_lhs.value(), _rhs.value());
+		return ValueOps.subtract(_lhs.eval(), _rhs.eval());
 	}
 }

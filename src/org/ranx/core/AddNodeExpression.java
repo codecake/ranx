@@ -32,7 +32,7 @@ public class AddNodeExpression extends NodeExpression {
 
 	@Override
 	public Value eval() throws InvalidOperation {
-		return ValueOps.add(_lhs.value(), _rhs.value());
+		return ValueOps.add(_lhs.eval(), _rhs.eval());
 	}
 
 }

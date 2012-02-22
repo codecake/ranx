@@ -26,12 +26,12 @@ public class AddNodeExpressionTest extends Assert {
 		Node sum = new Node();
 		sum.expression(new AddNodeExpression(sum, in1, in2));
 		assertFalse(sum.valid());
-		assertEquals(579, sum.value().asInt());
+		assertEquals(579, sum.eval().asInt());
 		assertTrue(sum.valid());
 		in1.invalidate();
 		assertFalse(sum.valid());
 		in1.set(222);
-		assertEquals(678, sum.value().asInt());
+		assertEquals(678, sum.eval().asInt());
 		assertTrue(sum.valid());
 	}
 }

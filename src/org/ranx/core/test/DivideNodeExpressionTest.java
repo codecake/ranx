@@ -26,12 +26,12 @@ public class DivideNodeExpressionTest extends Assert {
 		Node result = new Node();
 		result.expression(new DivideNodeExpression(result, in1, in2));
 		assertFalse(result.valid());
-		assertEquals(0.269736842, result.value().asDouble(), 0.00001);
+		assertEquals(0.269736842, result.eval().asDouble(), 0.00001);
 		assertTrue(result.valid());
 		in1.invalidate();
 		assertFalse(result.valid());
 		in1.set(222);
-		assertEquals(0.486842105, result.value().asDouble(), 0.00001);
+		assertEquals(0.486842105, result.eval().asDouble(), 0.00001);
 		assertTrue(result.valid());
 	}
 }

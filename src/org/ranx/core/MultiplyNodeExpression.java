@@ -32,7 +32,7 @@ public class MultiplyNodeExpression extends NodeExpression {
 
 	@Override
 	public Value eval() throws InvalidOperation {
-		return ValueOps.multiply(_lhs.value(), _rhs.value());
+		return ValueOps.multiply(_lhs.eval(), _rhs.eval());
 	}
 
 }

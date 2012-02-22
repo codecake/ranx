@@ -26,12 +26,12 @@ public class MultiplyNodeExpressionTest extends Assert {
 		Node sum = new Node();
 		sum.expression(new MultiplyNodeExpression(sum, in1, in2));
 		assertFalse(sum.valid());
-		assertEquals(56088, sum.value().asInt());
+		assertEquals(56088, sum.eval().asInt());
 		assertTrue(sum.valid());
 		in1.invalidate();
 		assertFalse(sum.valid());
 		in1.set(222);
-		assertEquals(101232, sum.value().asInt());
+		assertEquals(101232, sum.eval().asInt());
 		assertTrue(sum.valid());
 	}
 }
