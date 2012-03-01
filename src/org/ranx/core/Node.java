@@ -56,6 +56,12 @@ public class Node extends Expression {
 		invalidate();
 	}
 	
+	/*
+	public void setValue(int value_) {
+		expression(new ValueExpression(Value.of(value_)));
+	}
+	*/
+	
 	/**
 	 * Returns true if the node valid (has a value)
 	 * @return valid flag

@@ -128,11 +128,17 @@ public class NodeTest extends Assert {
 	}
 	
 	@Test public void connectAndInvalidate() throws InvalidOperation, InvalidCast {
-		/*
 		ValueNode in1 = NodeFactory.create(123);
 		ValueNode in2 = NodeFactory.create(456);
 		Node sum = new Node();
 		sum.expression(new AddExpression(in1, in2));
-		*/
+		sum.eval();
+		assertTrue(sum.valid());
+		assertEquals(579, sum.eval().asInt());
+		in1.set(124);
+		assertFalse(sum.valid());
+		sum.eval();
+		assertTrue(sum.valid());
+		assertEquals(580, sum.eval().asInt());
 	}
 }
